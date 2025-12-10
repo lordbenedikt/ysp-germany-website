@@ -5,6 +5,7 @@ import HeroWidget from '@/components/ysp/HeroWidget.vue';
 import HighlightsWidget from '@/components/landing/HighlightsWidget.vue';
 import PricingWidget from '@/components/landing/PricingWidget.vue';
 import TopbarWidget from '@/components/ysp/TopbarWidget.vue';
+
 </script>
 
 <template>

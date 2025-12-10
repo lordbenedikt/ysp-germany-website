@@ -1,5 +1,27 @@
 <script setup>
 import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
+import { auth } from '@/firebase.js';
+import { useRouter } from 'vue-router';
+import {onMounted, ref} from "vue";
+import {onAuthStateChanged} from "firebase/auth";
+import YspLogo from "@/components/ysp/YspLogo.vue";
+
+const user = ref(null)
+
+onMounted(() => {
+    onAuthStateChanged(auth, (firebaseUser) => {
+        if (firebaseUser) {
+            // User is signed in
+            user.value = firebaseUser;
+            console.log('User is logged in:', firebaseUser.email);
+        } else {
+            // User is signed out
+            user.value = null;
+            console.log('No user is logged in');
+        }
+    });
+});
+
 
 function smoothScroll(id) {
     document.body.click();
@@ -20,7 +42,6 @@ function linkClass(route) {
     return ['px-8 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl', { 'bg-surface-200 dark:bg-surface-700': isActiveRoute(route) }];
 }
 
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -33,11 +54,10 @@ router.afterEach(() => {
 
 <template>
     <a class="flex items-center" href="#">
-        <img src="/ysp/images/logo.png" alt="logo" width="50px" height="50px" style="margin-right:20px;">
-        <span class="text-surface-900 dark:text-surface-0 font-medium text-2xl leading-normal mr-20">YSP</span>
+        <YspLogo fillColor="var(--p-primary-color)" width="60px" height="60px" ></YspLogo>
     </a>
     <Button
-        class="lg:!hidden"
+        class="md:!hidden"
         text
         severity="secondary"
         rounded
@@ -45,8 +65,8 @@ router.afterEach(() => {
     >
         <i class="pi pi-bars !text-2xl"></i>
     </Button>
-    <div class="items-center bg-surface-0 dark:bg-surface-900 grow justify-between hidden  lg:flex absolute lg:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
-        <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col lg:flex-row cursor-pointer my-5 lg:my-0 gap-0 gap-y-8">
+    <div class="items-center bg-surface-0 dark:bg-surface-900 grow justify-between hidden text-nowrap md:flex absolute md:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
+        <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col md:flex-row cursor-pointer my-5 md:my-0 gap-0 gap-y-8">
             <li>
                 <router-link to="/about" :class="linkClass('/about')">
                     <span>Über uns</span>
@@ -62,7 +82,7 @@ router.afterEach(() => {
                     <span>Aktuelles</span>
                 </router-link>
             </li>
-            <li>
+            <li v-if="true || user" class="hidden lg:block">
                 <router-link to="/" :class="linkClass('/')">
                     <span>Admin</span>
                 </router-link>

@@ -10,9 +10,15 @@ const router = createRouter({
             component: AppLayout,
             children: [
                 {
-                    path: '/',
+                    path: '/admin',
                     name: 'dashboard',
                     component: () => import('@/views/Dashboard.vue')
+                },
+                {
+                    path: '/report_editor/:id?',
+                    name: 'Add Report',
+                    component: () => import('@/views/pages/ReportEditor.vue'),
+                    props: true,
                 },
                 {
                     path: '/uikit/formlayout',
@@ -161,7 +167,7 @@ const router = createRouter({
             path: '/auth/error',
             name: 'error',
             component: () => import('@/views/pages/auth/Error.vue')
-        }
+        },
     ]
 });
 

@@ -17,6 +17,7 @@ onMounted(() => {
             // User is signed in
             user.value = firebaseUser;
             console.log('User is logged in:', firebaseUser.email);
+            router.push('/');
         } else {
             // User is signed out
             user.value = null;

@@ -10,13 +10,13 @@ const router = createRouter({
             component: AppLayout,
             children: [
                 {
-                    path: '/admin',
-                    name: 'dashboard',
-                    component: () => import('@/views/Dashboard.vue')
+                    path: '/',
+                    name: 'New Report',
+                    component: () => import('@/views/pages/ReportEditor.vue')
                 },
                 {
-                    path: '/report_editor/:id?',
-                    name: 'Add Report',
+                    path: '/edit_report/:id?',
+                    name: 'Edit Report',
                     component: () => import('@/views/pages/ReportEditor.vue'),
                     props: true,
                 },
@@ -152,7 +152,11 @@ const router = createRouter({
             name: 'notfound',
             component: () => import('@/views/pages/NotFound.vue')
         },
-
+        {
+            path: '/admin',
+            name: 'adminPanel',
+            component: () => import('@/views/pages/auth/Login.vue')
+        },
         {
             path: '/auth/login',
             name: 'login',

@@ -82,7 +82,7 @@ router.afterEach(() => {
                     <span>Aktuelles</span>
                 </router-link>
             </li>
-            <li v-if="true || user" class="hidden lg:block">
+            <li v-if="true || user" class="lg:block">
                 <router-link to="/" :class="linkClass('/')">
                     <span>Admin</span>
                 </router-link>

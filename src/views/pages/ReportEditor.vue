@@ -12,6 +12,7 @@ import ImageUpload from '@/components/ImageUpload.vue';
 import {FileUploadSelectEvent, FileUploadUploadEvent} from 'primevue/fileupload';
 import {getStorage, ref as fileRef, uploadBytes, getDownloadURL, deleteObject} from "firebase/storage";
 import {shortDateStr} from "@/util";
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 const props = defineProps({
     id: null,
@@ -25,6 +26,10 @@ const imageUrls = ref<string[]>([]);
 
 async function submitReport() {
     const reportsRef = collection(firestore, 'reports')
+    let docId = props.id != null && props.id.trim().length > 0 ? props.id : null;
+
+
+
     const report: Post = {
         title: title.value,
         date: date.value,
@@ -32,8 +37,10 @@ async function submitReport() {
         location: location.value ?? '',
         photoUrls: imageUrls.value ?? [],
     };
-    let docId = props.id != null && props.id.trim().length > 0 ? props.id : null;
+
+    // If new report create ID
     docId ??= `${report.date.toISOString().split('T')[0]}-${report.title.replace(new RegExp('\s+'), '-').toLowerCase()}`;
+
     await setDoc(doc(reportsRef, docId), postConverter.toFirestore(report));
     alert('Report submitted successfully!');
 }
@@ -84,7 +91,6 @@ function onFileSelect(event: FileUploadSelectEvent) {
 }
 
 async function removePhoto(url) {
-    await deleteObject(fileRef(storage, url))
     imageUrls.value = imageUrls.value.filter(u => u !== url);
 }
 
@@ -134,7 +140,8 @@ onMounted(() => loadReport());
             </div>
 
             <div class="card">
-                <Button @click="submitReport" :label="props.id ? 'Save Changes' : 'Submit Report'" :fluid="true"></Button>
+                <Button class="mb-3" @click="submitReport" :label="props.id ? 'Save Changes' : 'Submit Report'" :fluid="true"></Button>
+                <Button class="p-button-outlined" @click="$router.push('/reports')" label="To Public Reports Site" :fluid="true"></Button>
             </div>
         </div>
 

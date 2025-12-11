@@ -63,9 +63,9 @@ fetchReportsFromFirestore();
             <Carousel v-if="entry.post.photoUrls.length > 0" class="-mx-5 md:me-2 md:w-1/2 lg:w-1/2" :value="entry.post.photoUrls.map(url => ({ itemImageSrc: url }))" :numVisible="1" :numScroll="1" :responsiveOptions="carouselResponsiveOptions">
                 <template #item="slotProps">
                     <div class="border border-surface-200 dark:border-surface-700 rounded lg:m-2 p-2 lg:p-4">
-                        <div class="relative mx-auto">
-                            <img :src="slotProps.data.itemImageSrc" :alt="slotProps.data.name" style="object-fit: cover;" class="aspect-4/4 rounded"/>
-                        </div>
+<!--                        <div style="width:100%; height: 100%;"></div>-->
+                        <Image :src="slotProps.data.itemImageSrc" :alt="slotProps.data.name" :imageStyle="{ objectFit: 'cover' }" imageClass="aspect-4/4 rounded" preview/>
+
                     </div>
                 </template>
             </Carousel>

@@ -1,7 +1,7 @@
 <script setup>
 import FloatingConfigurator from "@/components/FloatingConfigurator.vue";
 import { auth } from '@/firebase.js';
-import { useRouter } from 'vue-router';
+import {RouterLink, useRouter} from 'vue-router';
 import {onMounted, ref} from "vue";
 import {onAuthStateChanged} from "firebase/auth";
 import YspLogo from "@/components/ysp/YspLogo.vue";
@@ -35,7 +35,8 @@ function smoothScroll(id) {
 }
 
 function isActiveRoute(route) {
-    return route === useRouter().currentRoute.value.path;
+    let currentPath = useRouter().currentRoute.value.path
+    return route === currentPath|| route.alias === currentPath;
 }
 
 function linkClass(route) {
@@ -83,7 +84,7 @@ router.afterEach(() => {
                 </router-link>
             </li>
             <li v-if="true || user" class="lg:block">
-                <router-link to="/admin" :class="linkClass('/admin')">
+                <router-link to="/new_report" :class="linkClass('/new_report')">
                     <span>Admin</span>
                 </router-link>
             </li>

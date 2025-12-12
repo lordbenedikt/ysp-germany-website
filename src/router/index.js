@@ -56,7 +56,8 @@ const router = createRouter({
             component: AppLayout,
             children: [
                 {
-                    path: '/admin',
+                    path: '/new_report',
+                    alias: '/admin',
                     name: 'New Report',
                     component: () => import('@/views/pages/ReportEditor.vue')
                 },

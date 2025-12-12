@@ -31,7 +31,9 @@ const events = [
 <template>
     <div v-for="event in events" class="card m-0 lg:m-5">
         <div class="flex lg:flex-row flex-wrap m-0">
-            <Image v-if="event.imageUrl" class="-mx-5 md:me-2 md:w-1/2 lg:w-1/2" :src="event.imageUrl"/>
+            <div class="md:w-1/2 lg:w-1/2 pe-5">
+                <Image v-if="event.imageUrl"  :src="event.imageUrl" :alt="event.title" :imageStyle="{ objectFit: 'cover' }" imageClass="aspect-4/4 rounded" preview/>
+            </div>
 
             <div class="flex flex-col flex-grow md:w-1/2 lg:w-1/2">
                 <div class="flex flex-row justify-between w-full mb-5">

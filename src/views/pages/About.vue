@@ -10,7 +10,7 @@ import TopbarWidget from '@/components/ysp/TopbarWidget.vue';
 <template>
     <HeroWidget/>
     <FeaturesWidget />
-    <HighlightsWidget />
-    <PricingWidget />
+<!--    <HighlightsWidget />-->
+<!--    <PricingWidget />-->
     <FooterWidget />
 </template>

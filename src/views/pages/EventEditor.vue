@@ -4,6 +4,7 @@ import {onMounted, reactive, Ref, ref} from 'vue';
 import {Post, postConverter} from "@/models/post";
 import { firestore, storage } from '@/firebase';
 import { collection, doc, setDoc, getDocs, getDoc } from "firebase/firestore";
+import firebase from "firebase/compat/app";
 import {FileUploadSelectEvent, FileUploadUploadEvent} from 'primevue/fileupload';
 import {getStorage, ref as fileRef, uploadBytes, getDownloadURL, deleteObject} from "firebase/storage";
 import {shortDateStr} from "@/util";
@@ -15,51 +16,51 @@ const props = defineProps({
 const date = ref(new Date())
 const title = ref(null);
 const location = ref(null);
-const reportText = ref(null);
+const eventText = ref(null);
 const imageUrls = ref<string[]>([]);
 
-async function submitReport() {
-    const reportsRef = collection(firestore, 'reports')
+async function submitEvent() {
+    const eventsRef = collection(firestore, 'events')
     let docId = props.id != null && props.id.trim().length > 0 ? props.id : null;
 
 
 
-    const report: Post = {
+    const event: Post = {
         title: title.value,
         date: date.value,
-        body: reportText.value ?? '',
+        body: eventText.value ?? '',
         location: location.value ?? '',
         photoUrls: imageUrls.value ?? [],
     };
 
-    // If new report create ID
-    docId ??= `${report.date.toISOString().split('T')[0]}-${report.title.replace(new RegExp('\s+'), '-').toLowerCase()}`;
+    // If new event create ID
+    docId ??= `${event.date.toISOString().split('T')[0]}-${event.title.replace(new RegExp('\s+'), '-').toLowerCase()}`;
 
-    await setDoc(doc(reportsRef, docId), postConverter.toFirestore(report));
-    alert('Report submitted successfully!');
+    await setDoc(doc(eventsRef, docId), postConverter.toFirestore(event));
+    alert('Event submitted successfully!');
 }
 
 async function uploadImages() {
 
 }
 
-async function loadReport() {
+async function loadEvent() {
     if (props.id == null || props.id.trim().length === 0) {
         return;
     }
-    const docRef = doc(firestore, "reports", props.id);
+    const docRef = doc(firestore, "events", props.id);
     const docSnap = await getDoc(docRef);
     const post = postConverter.fromFirestore(docSnap, '')
     title.value = post.title;
     date.value = post.date;
     location.value = post.location;
-    reportText.value = post.body;
+    eventText.value = post.body;
     imageUrls.value = post.photoUrls;
 }
 
 function onUpload(event: FileUploadUploadEvent) {
     for (let file in event.files) {
-        // Handle each uploaded file (e.g., save URL to report)
+        // Handle each uploaded file (e.g., save URL to event)
         console.log('Uploaded file:', file);
     }
 }
@@ -88,8 +89,7 @@ async function removePhoto(url) {
     imageUrls.value = imageUrls.value.filter(u => u !== url);
 }
 
-onMounted(() => loadReport());
-
+onMounted(() => loadEvent());
 </script>
 
 <template>
@@ -111,10 +111,10 @@ onMounted(() => loadReport());
                 </div>
             </div>
             <div class="card flex flex-col gap-4 flex-grow">
-                <div class="font-semibold text-xl">Report Text</div>
+                <div class="font-semibold text-xl">Event Text</div>
                 <div class="flex flex-col gap-2 flex-grow">
-                    <Textarea class="flex-grow" style="min-height: 100px;" auto-resize id="section-1-content" type="text" v-model="reportText" />
-                    <small>Write your report here.</small>
+                    <Textarea class="flex-grow" style="min-height: 100px;" auto-resize id="section-1-content" type="text" v-model="eventText" />
+                    <small>Write your event here.</small>
                 </div>
             </div>
 
@@ -135,10 +135,12 @@ onMounted(() => loadReport());
             </div>
 
             <div class="card">
-                <Button class="mb-3" @click="submitReport" :label="props.id ? 'Save Changes' : 'Submit Report'" :fluid="true"></Button>
-                <Button class="p-button-outlined" @click="$router.push('/reports')" label="To Public Reports Site" :fluid="true"></Button>
+                <Button class="mb-3" @click="submitEvent" :label="props.id ? 'Save Changes' : 'Submit Event'" :fluid="true"></Button>
+                <Button class="p-button-outlined" @click="$router.push('/events')" label="To Public Events Site" :fluid="true"></Button>
             </div>
         </div>
 
     </div>
 </template>
+
+

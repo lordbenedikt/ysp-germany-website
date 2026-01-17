@@ -34,8 +34,12 @@ function getCurrentRouteName() {
             <router-link to="/" class="layout-topbar-logo">
                 <ysp-logo fill-color="var(--p-primary-color)"/>
 
-                <span class="text-nowrap">Admin Panel {{heading}}</span>
+                <span class="hidden md:block text-nowrap">Admin Panel {{heading}}</span>
             </router-link>
+        </div>
+
+        <div class="text-center text-2xl flex-1" style="margin-inline: auto">
+            {{ getCurrentRouteName() }}
         </div>
 
         <div class="layout-topbar-actions">

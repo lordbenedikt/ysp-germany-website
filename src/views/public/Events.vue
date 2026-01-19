@@ -93,7 +93,7 @@ fetchEventsFromFirestore();
 
             <div class="flex flex-col flex-grow md:w-1/2 lg:w-1/2">
                 <div class="flex flex-row justify-between w-full mb-5 gap-1">
-                    <div class="font-bold text-xl md:text-2xl lg:text-3xl flex-1">{{ entry.post.title }}</div>
+                    <div class="font-bold mt-5 md:mt-0 text-center md:text-left text-2xl md:text-4xl lg:text-5xl flex-1">{{ entry.post.title }}</div>
                     <Button v-if="user" @click="deleteEventPrompt(entry.id)" icon="pi pi-trash" severity="danger"></Button>
                     <Button v-if="user" @click="$router.push('/edit_event/'+entry.id)" icon="pi pi-pencil" label="Bearbeiten"></Button>
                 </div>

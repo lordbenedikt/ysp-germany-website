@@ -70,7 +70,7 @@ const { isDarkTheme, toggleDarkMode } = useLayout();
     >
         <i class="pi pi-bars !text-2xl"></i>
     </Button>
-    <div class="items-center grow justify-between hidden text-nowrap md:flex absolute md:static w-full left-0 top-full px-12 lg:px-0 z-20 rounded-border">
+    <div class="items-center grow justify-between hidden text-nowrap md:flex absolute md:static w-full left-0 top-full px-12 lg:px-0 z-20 bg-white md:bg-transparent rounded-border">
         <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col md:flex-row cursor-pointer my-5 md:my-0 gap-0 gap-y-8">
             <li>
                 <router-link to="/" :class="linkClass('/')">

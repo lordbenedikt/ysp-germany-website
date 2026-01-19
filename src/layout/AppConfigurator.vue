@@ -196,6 +196,9 @@ function onPresetChange() {
 function onMenuModeChange() {
     layoutConfig.menuMode = menuMode.value;
 }
+
+applyTheme('surface', surfaces.value.find(color => color.name === 'slate'))
+applyTheme('primary', surfaces.value.find(color => color.name === 'cyan'))
 </script>
 
 <template>

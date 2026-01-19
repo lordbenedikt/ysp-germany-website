@@ -70,7 +70,7 @@ const { isDarkTheme, toggleDarkMode } = useLayout();
     >
         <i class="pi pi-bars !text-2xl"></i>
     </Button>
-    <div class="items-center grow justify-between hidden text-nowrap md:flex absolute md:static w-full left-0 top-full px-12 lg:px-0 z-20 bg-white md:bg-transparent rounded-border">
+    <div class="items-center grow justify-between hidden text-nowrap md:flex absolute md:static w-full left-0 top-full px-12 lg:px-0 z-20 bg-surface-0 dark:bg-surface-900 md:bg-transparent rounded-border">
         <ul class="list-none p-0 m-0 flex lg:items-center select-none flex-col md:flex-row cursor-pointer my-5 md:my-0 gap-0 gap-y-8">
             <li>
                 <router-link to="/" :class="linkClass('/')">
@@ -97,7 +97,7 @@ const { isDarkTheme, toggleDarkMode } = useLayout();
             </li>
         </ul>
     </div>
-    <div class="fixed flex gap-4 top-8 right-24">
+    <div class="fixed flex gap-4 top-8 right-24" style="z-index: 100;">
         <Button type="button" @click="toggleDarkMode" rounded :icon="isDarkTheme ? 'pi pi-moon' : 'pi pi-sun'" severity="secondary" />
         <div class="relative">
             <Button
